@@ -1,0 +1,38 @@
+services:
+  broker:
+    image: eclipse-mosquitto
+    # build: ./broker
+    restart: always
+    ports:
+        - 1883:1883
+        - 9001:9001
+    volumes:
+      - ./broker/config:/mosquitto/config
+      - ./broker/data:/mosquitto/data/
+      - ./broker/log:/mosquitto/log/
+    networks:
+      default:
+        ipv4_address: 10.5.0.5
+  publisher:
+    build: ./publisher
+    depends_on:
+      - broker
+    networks:
+      default:
+        ipv4_address: 10.5.0.6
+  receiver:
+    build: ./receiver
+    depends_on:
+      - broker
+    networks:
+      default:
+        ipv4_address: 10.5.0.7
+
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+          
