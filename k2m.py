@@ -5,21 +5,21 @@ from confluent_kafka import Consumer
 mqtt_broker = "50.112.8.166"
 
 # create function for callback
-def on_publish(client,userdata,result):             
+def on_publish(client,userdata,result):
     print("data published \n")
     pass
 
 # create client object
-mqttPub= mqtt.Client()    
+mqttPub= mqtt.Client()
 
 # assign function to callback
-mqttPub.on_publish = on_publish   
+mqttPub.on_publish = on_publish
 
 # establish connection
-mqttPub.connect(mqtt_broker,1883)     
+mqttPub.connect(mqtt_broker,1883)
 
 # publish to VerneMQ broker
-#pub = mqttPub.publish("Location_Data","test")                   
+#pub = mqttPub.publish("Location_Data","test")
 
 # Create the kafka consumer instance
 kafkaSub=Consumer({'bootstrap.servers':'localhost:9092','group.id':'python-consumer','auto.offset.reset':'earliest'})
