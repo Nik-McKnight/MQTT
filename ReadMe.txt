@@ -1,36 +1,49 @@
 
-This project contains a basic MQTT publishing client, receiving client, and broker.
+This project contains a basic MQTT publishing client, receiving client, and broker, a Kafka publisher, recceiver, and broker, and two bridges between the two.
 
 =======================================================================================================================
 
-To start the project with Docker, simply run "docker compose up -d" in the terminal. 
+You will need the private key file (KafkaCluster.pem) to log in to any of the following instances using SSH.
 
-=======================================================================================================================
+If you get an “unprotected key file” warning, run “chmod 400 KafkaCluster.pem” in whatever directory contains the key file.
+Set-Up MQTT Broker and Clients
 
-To start everything manually:
+    Open one “MQTT_Broker” instance.
 
-1. In publisher/publisher.c, uncomment line 24 and comment out line 25.
+    Run "sudo service vernemq start" to start the MQTT broker.
 
-2. In receiver/receiver.py, uncomment line 69 and comment out line 70.
+    Run "sudo vernemq ping". It will respond with "pong" if the broker is running.
 
-3. In the terminal, run "mosquitto -v" to start the broker.
+    Open two “MQTT_Client” instances.
 
-4. In a second terminal, navigate to atugan/publisher, run "apt-get -y update && apt-get install -y libmosquitto-dev", 
-   "gcc publisher.c -o publisher -lmosquitto", and finally "./publisher" to start the publisher client.
+    Run "python3 sub/subscriber.py" in one instance to start the MQTT subscriber.
 
-5. In a third terminal, navigate to atugan/receiver, run "pip install paho-mqtt", "pip install geopy",
-   and finally "python3 receiver.py" to start the receiver client.
+    Run "./pub/mqttPublisher" in the other instance to start the MQTT publisher.
 
-=======================================================================================================================
+    The subscriber should now be receiving the data published by the publisher.
 
-You can also pull the following images and run them in the same container.
+Set-Up Kafka Broker and Clients
 
-Publisher Docker - https://hub.docker.com/repository/docker/nikmcknight/atugan-publisher
+    Open one “Kafka_Cluster” instance.
 
-Receiver Docker - https://hub.docker.com/repository/docker/nikmcknight/atugan-receiver
+    Run "kafka_2.13-3.4.0/bin/kafka-server-start.sh kafka_2.13-3.4.0/config/kraft/server.properties" to start the Kafka server.
 
-Broker Docker - https://hub.docker.com/repository/docker/nikmcknight/eclipse-mosquitto
+    Open two “Kafka_Client” instances.
 
-=======================================================================================================================
+    Run "python3 kafkaSub.py" in one instance to start the Kafka subscriber.
 
-Github Repo - https://github.com/Nik-McKnight/atugan
+    Run "python3 kafkaPub.py" in the other instance to start the Kafka publisher.
+
+    The subscriber should now be receiving the data published by the publisher.
+
+Set-Up MQTT-Kafka Bridge
+
+Note: There are two bridge programs, publishing from MQTT to Kafka and vice versa. Only one can be run at a time.
+
+    Open another "Kafka_Cluster" instance.
+
+    Run "python3 mqttBridge.py". If the MQTT broker, Kafka Cluster, MQTT Publisher, and Kafka Subscriber are all running, the Kafka Subscriber should be receiving data published by the MQTT Publisher.
+
+    Stop the MQTT bridge with ctrl+c.
+
+    Run "python3 kafkaToMqttBridge.py". If the MQTT broker, Kafka Cluster, MQTT Subscriber, and Kafka Publisher are all running, the MQTT Subscriber should be receiving data published by the Kafka Publisher.
