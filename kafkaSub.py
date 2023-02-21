@@ -2,12 +2,10 @@ from time import sleep
 from confluent_kafka import Consumer
 from geopy.geocoders import Nominatim
 
-
+# Set consumer configs
 conf = {'bootstrap.servers': "54.214.206.185:9092",
         'group.id': "foo",
         'auto.offset.reset': 'smallest'}
-
-
 consumer = Consumer(conf)
 
 # The topic(s) to be subscribed to
@@ -44,7 +42,7 @@ def convertData(data):
     try:
         id = rawData[0].split(": \"")[1]
     except:
-        id = rawData[0]
+        id = rawData[0][2:]
 
     # latitude is received on a 0-180 scale, rather than -90 to 90
     latitude = int(rawData[1]) - 90
@@ -79,8 +77,9 @@ def convertData(data):
     {'-' * 100}
     ''')
 
+# Subscribe to topics
 consumer.subscribe(topics)
-    
+
 while True:
     try:
         # SIGINT can't be handled when polling, limit timeout to 1 second.
@@ -92,26 +91,3 @@ while True:
         break
 
 consumer.close()
-# try:
-#     while True:
-#         msg = consumer.poll(timeout=1.0)
-#         if msg is None: 
-#             continue
-#         if msg.error():
-#             print('Error: {}'.format(msg.error()))
-#             continue
-#         convertData(msg.value())
-#         sleep(300)
-#         # # else:
-#         # if (msg != None):
-#         #     convertData(msg.value())
-#         # else:
-#         #     continue
-# except:
-#     print("Something went wrong")
-
-# finally:
-#     # Close down consumer to commit final offsets.
-#     consumer.close()
-
-
