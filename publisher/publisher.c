@@ -58,9 +58,11 @@ int main()
 		// 30500 ~= difference between Dead Sea and Everest elevation
 		int altitude = rand() % 30500;
 
+		int airspeed = rand() % 30500;
+
 		// Create a string with all of the raw values included.
 		char str[32];
-		sprintf(str, "%d, %d, %d, %d, %d, ", i, latitude, longitude, altitude, temperature);
+		sprintf(str, "%d, %d, %d, %d, %d, %d, ", i, latitude, longitude, altitude, temperature, airspeed);
 
 		// Pad the string with trailing whitespace.
 		char result[32];
