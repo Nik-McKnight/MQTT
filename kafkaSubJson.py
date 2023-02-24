@@ -1,6 +1,4 @@
-from time import sleep
 import json
-from json import loads
 from confluent_kafka import Consumer
 
 # Set consumer configs
@@ -10,10 +8,10 @@ conf = {'bootstrap.servers': "54.214.206.185:9092",
 consumer = Consumer(conf)
 
 # The topic(s) to be subscribed to
-topics = ["Location_Data"]
+topics = ["Flight_Data"]
 
 def printData(rawData):
-    # Convert encoded data to JSON.
+    # Convert encoded data back to JSON.
     data = json.loads(rawData)
     
     # Print all the data

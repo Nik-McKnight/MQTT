@@ -9,6 +9,7 @@ producer = KafkaProducer(bootstrap_servers=['54.214.206.185:9092'],
                          value_serializer=lambda x:
                          bytes(json.dumps(x, default=str).encode('utf-8')))
 
+# Converts coordinates from raw numbers to strings
 def convertCoordinates(lat,lon):
     if (0 > lat):
         convertedLat = str(-lat) + "S"
@@ -31,9 +32,6 @@ for i in range(10):
     altitude = str(random.randrange(20000,40000)) + "ft"
     airspeed = str(random.randrange(400,600)) + "mph"
 
-    # data = {'data' : "%d, %d, %d, %d, %d, " % (id, latitude, longitude, altitude, temperature)}
-    # data = "{'id': %s, 'Latitude': %s, 'Longitude': %s, 'Altitude': %s, 'Temperature': %s, 'Airspeed': %s}" % (str(i), 
-    #         convertedCoordinates[0], convertedCoordinates[1], altitude, temperature, airspeed)
     data = {"id": str(i), 
             "Latitude": convertedCoordinates[0], 
             "Longitude": convertedCoordinates[1], 
@@ -42,5 +40,5 @@ for i in range(10):
             "Airspeed": airspeed
             }
 
-    producer.send('Location_Data', data)
+    producer.send('Flight_Data', data)
     sleep(1)
