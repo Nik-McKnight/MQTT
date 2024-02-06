@@ -3,10 +3,6 @@ This project contains a basic MQTT publishing client, receiving client, and brok
 
 =======================================================================================================================
 
-To start the project with Docker, simply run "docker compose up -d" in the terminal. 
-
-=======================================================================================================================
-
 To start everything manually:
 
 1. In publisher/publisher.c, uncomment line 24 and comment out line 25.
