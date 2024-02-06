@@ -23,14 +23,4 @@ To start everything manually:
 
 =======================================================================================================================
 
-You can also pull the following images and run them in the same container.
-
-Publisher Docker - https://hub.docker.com/repository/docker/nikmcknight/atugan-publisher
-
-Receiver Docker - https://hub.docker.com/repository/docker/nikmcknight/atugan-receiver
-
-Broker Docker - https://hub.docker.com/repository/docker/nikmcknight/eclipse-mosquitto
-
-=======================================================================================================================
-
 Github Repo - https://github.com/Nik-McKnight/MQTT
