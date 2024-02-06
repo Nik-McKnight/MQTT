@@ -5,11 +5,9 @@ The publisher is intended to be run in IoT devices (such as weather beacons) and
 
 The receiver is intended to be run on a server and parses the received data. It provides more detailed location data, where possible.
 
-Instructions provided to run the project in a Linux environment.
-
 =======================================================================================================================
 
-To start everything manually:
+Instructions provided to run the project in a Linux environment:
 
 1. Install Mosquitto - http://www.steves-internet-guide.com/install-mosquitto-linux/
 
