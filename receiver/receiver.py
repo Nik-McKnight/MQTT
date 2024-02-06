@@ -63,11 +63,11 @@ def onMessage(client, userdata, msg):
 client = paho.Client("Location_Receiver")
 client.on_message = onMessage
 
-# Connect the client to the broker
+# Connect the client to the broker. Change the host name to connect to a different machine.
 while(True):
     try:
-        # client.connect("localhost", 1883, 60)
-        client.connect("10.5.0.5", 1883, 60)
+        client.connect("localhost", 1883, 60)
+        # client.connect("10.5.0.5", 1883, 60)
         break;
     except:
         print("Could not connect to broker. Trying again.")
