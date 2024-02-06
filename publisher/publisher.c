@@ -20,9 +20,9 @@ int main()
 	// Loop until connected to the broker.
 	while (true)
 	{
-		// Try to connect to the broker.
-		// rc = mosquitto_connect(mosq, "localhost", 1883, 60);
-		rc = mosquitto_connect(mosq, "10.5.0.5", 1883, 60);
+		// Try to connect to the broker. Change the host name to connect to a different machine.
+		rc = mosquitto_connect(mosq, "localhost", 1883, 60);
+		// rc = mosquitto_connect(mosq, "10.5.0.5", 1883, 60);
 
 		// Connection fails
 		if (rc != 0)
